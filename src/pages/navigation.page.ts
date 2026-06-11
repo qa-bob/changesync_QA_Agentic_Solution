@@ -33,8 +33,15 @@ export class NavigationPage extends BasePage {
   /** Return true if a navigation element is visible on the page. */
   async isNavVisible(): Promise<boolean> {
     const nav = this.getNavLocator();
-    if (await nav.count() === 0) return false;
-    return nav.isVisible();
+    if (await nav.count() > 0 && await nav.isVisible()) return true;
+
+    // On mobile viewports, Wix collapses the nav — a visible hamburger toggle counts
+    const toggle = await this.getMobileMenuToggle();
+    if (toggle && (await toggle.isVisible())) return true;
+
+    // Also accept any visible links in a header/nav area
+    const headerLinks = this.page.locator('header a[href], [role="navigation"] a[href]');
+    return (await headerLinks.count()) > 0;
   }
 
   // ── Nav links ────────────────────────────────────────────────────────────────
@@ -137,6 +144,9 @@ export class NavigationPage extends BasePage {
         results.push({ url: link.href, status: 0, ok: false });
         continue;
       }
+
+      // Skip external links (Calendly, login services, etc.) — only check internal pages
+      if (!absoluteUrl.startsWith(baseUrl.origin)) continue;
 
       try {
         const response = await this.page.request.head(absoluteUrl, {

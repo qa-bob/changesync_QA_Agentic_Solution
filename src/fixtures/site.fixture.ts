@@ -10,10 +10,15 @@
  */
 
 import { test as base, expect } from '@playwright/test';
-import { loadSiteConfig, type SiteConfig } from '@types/site-config.types';
+import { loadSiteConfig, type SiteConfig } from '@site-types/site-config.types';
 import { HomePage } from '@pages/home.page';
 import { NavigationPage } from '@pages/navigation.page';
 import { ContactFormPage } from '@pages/contact.page';
+import { SoftwarePage } from '@pages/software.page';
+import { ServicesPage } from '@pages/services.page';
+import { AboutPage } from '@pages/about.page';
+import { BlogPage } from '@pages/blog.page';
+import { EventsPage } from '@pages/events.page';
 
 // ── Fixture type definitions ─────────────────────────────────────────────────
 
@@ -26,6 +31,16 @@ export interface Fixtures {
   navigationPage: NavigationPage;
   /** ContactFormPage page object (does not auto-navigate) */
   contactPage: ContactFormPage;
+  /** SoftwarePage page object (does not auto-navigate) */
+  softwarePage: SoftwarePage;
+  /** ServicesPage page object (does not auto-navigate) */
+  servicesPage: ServicesPage;
+  /** AboutPage page object (does not auto-navigate) */
+  aboutPage: AboutPage;
+  /** BlogPage page object (does not auto-navigate) */
+  blogPage: BlogPage;
+  /** EventsPage page object (does not auto-navigate) */
+  eventsPage: EventsPage;
 }
 
 // ── Extended test object ─────────────────────────────────────────────────────
@@ -66,6 +81,31 @@ export const test = base.extend<Fixtures>({
   contactPage: async ({ page, siteConfig }, use) => {
     const contactPage = new ContactFormPage(page, siteConfig);
     await use(contactPage);
+  },
+
+  /** softwarePage — constructs SoftwarePage without navigating. */
+  softwarePage: async ({ page, siteConfig }, use) => {
+    await use(new SoftwarePage(page, siteConfig));
+  },
+
+  /** servicesPage — constructs ServicesPage without navigating. */
+  servicesPage: async ({ page, siteConfig }, use) => {
+    await use(new ServicesPage(page, siteConfig));
+  },
+
+  /** aboutPage — constructs AboutPage without navigating. */
+  aboutPage: async ({ page, siteConfig }, use) => {
+    await use(new AboutPage(page, siteConfig));
+  },
+
+  /** blogPage — constructs BlogPage without navigating. */
+  blogPage: async ({ page, siteConfig }, use) => {
+    await use(new BlogPage(page, siteConfig));
+  },
+
+  /** eventsPage — constructs EventsPage without navigating. */
+  eventsPage: async ({ page, siteConfig }, use) => {
+    await use(new EventsPage(page, siteConfig));
   },
 });
 

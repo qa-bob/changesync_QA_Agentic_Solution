@@ -1,11 +1,18 @@
 ﻿{
     "name":  "ChangeSync",
     "url":  "https://changesync.com",
-    "description":  "",
-    "industry":  "",
+    "description":  "Enterprise change management software and consulting for AI transformation and organizational change capability",
+    "industry":  "Enterprise Software / Change Management Consulting",
     "hasContactForm":  true,
     "expectedNavItems":  [
-
+                             "About Us",
+                             "Services",
+                             "Software",
+                             "Blog",
+                             "Contact Us",
+                             "Events",
+                             "Login",
+                             "Book a Demo"
                          ],
     "viewports":  [
                       "desktop",
