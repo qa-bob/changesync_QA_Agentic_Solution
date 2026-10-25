@@ -145,10 +145,7 @@ test.describe('Blog Page @functional', () => {
     const blogPage = new BlogPage(page, siteConfig);
     const links = await blogPage.getArticleLinks();
 
-    if (links.length === 0) {
-      console.warn('[blog] No article links found — skipping href validation.');
-      return;
-    }
+    test.skip(links.length === 0, 'No article links found');
 
     const emptyHrefs = links.filter((l) => !l.href || l.href.trim().length === 0);
     expect(
